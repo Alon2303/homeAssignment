@@ -1,12 +1,13 @@
 const http = require("http");
 const servers = require("./config/servers.json");
 const axios = require("axios");
+const {REQUEST_TIME_OUT} = require("./config/config");
 
 const getServerStatus = async (server) => {
   try {
     const res = await axios.get(
       "http://localhost:3000/onlineServer?serverObject=" +
-        JSON.stringify(server)
+        JSON.stringify(server), {timeout: REQUEST_TIME_OUT}
     );
     return res.data;
   } catch (error) {
