@@ -1,3 +1,7 @@
 const { getOnlineServer } = require("./src/servers.service");
 
-getOnlineServer();
+getOnlineServer()
+  .then((res) => console.log(res))
+  .catch((err) => {
+    throw new Error(err);
+  });

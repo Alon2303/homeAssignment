@@ -36,7 +36,8 @@ const getOnlineServer = async () => {
     }
   );
 
-  console.log(mostAvailableServer.value);
+  const { url } = mostAvailableServer.value;
+  return url;
 };
 
 module.exports = { getOnlineServer, getServerStatus };
