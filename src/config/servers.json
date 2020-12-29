@@ -1,0 +1,34 @@
+[
+  {
+    "url": "http://server1.com",
+    "priority": 1
+  },
+  {
+    "url": "http://server2.com",
+    "priority": 7
+  },
+  {
+    "url": "http://server3.com",
+    "priority": 2
+  },
+  {
+    "url": "http://server4.com",
+    "priority": 4
+  },
+  {
+    "url": "http://server5.com",
+    "priority": 3
+  },
+  {
+    "url": "http://server6.com",
+    "priority": 8
+  },
+  {
+    "url": "http://server7.com",
+    "priority": 6
+  },
+  {
+    "url": "http://server8.com",
+    "priority": 5
+  }
+]
