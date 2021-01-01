@@ -4,7 +4,9 @@
   "description": "Node module that determines the availability of a given list of servers and then returns an avalable server with the lowest priority number",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --detectOpenHandles --coverage --verbose",
+    "server": "node ./src/server.js",
+    "getServer": "node index.js"
   },
   "repository": {
     "type": "git",

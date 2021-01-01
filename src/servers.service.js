@@ -1,18 +1,14 @@
-const http = require("http");
 const servers = require("./config/servers.json");
 const axios = require("axios");
-const {REQUEST_TIME_OUT} = require("./config/config");
+const { REQUEST_TIME_OUT } = require("./config/config");
+const { MIN_STATUS_VALUE, MAX_STATUS_VALUE } = require("./config/config");
 
 const getServerStatus = async (server) => {
-  try {
-    const res = await axios.get(
-      "http://localhost:3000/onlineServer?serverObject=" +
-        JSON.stringify(server), {timeout: REQUEST_TIME_OUT}
-    );
-    return res.data;
-  } catch (error) {
-    throw new Error(error);
-  }
+  const res = await axios.get(
+    "http://localhost:3000/onlineServer?serverObject=" + JSON.stringify(server),
+    { timeout: REQUEST_TIME_OUT }
+  );
+  return res.data;
 };
 
 const getOnlineServer = async () => {
@@ -22,7 +18,6 @@ const getOnlineServer = async () => {
   }
 
   const apiCallResults = await Promise.allSettled(serverStatusCalls);
-
   const availableServers = apiCallResults.filter(
     (response) => response.value.available
   );
@@ -30,15 +25,29 @@ const getOnlineServer = async () => {
   if (!availableServers.length) throw new Error("All servers are offline");
 
   const mostAvailableServer = availableServers.reduce(
-    (lowestPriority, priority) => {
-      return lowestPriority.value.priority < priority.value.priority
+    (lowestPriority, priority) =>
+      lowestPriority.value.priority < priority.value.priority
         ? lowestPriority
-        : priority;
-    }
+        : priority
   );
 
   const { url } = mostAvailableServer.value;
-  return url;
+  return "Server " + url + " is available and has the lowest priority";
 };
 
-module.exports = { getOnlineServer, getServerStatus };
+const setServerState = async () => {
+  const status = Math.floor(
+    Math.random() * (MAX_STATUS_VALUE - MIN_STATUS_VALUE) + MIN_STATUS_VALUE
+  );
+  return status >= 200 && status < 300;
+};
+
+const getServerAvailability = async (server) => {
+  const available = await setServerState();
+  return {
+    ...server,
+    available,
+  };
+};
+
+module.exports = { getOnlineServer, getServerAvailability, getServerStatus };
